@@ -1,0 +1,29 @@
+pipeline {
+    agent any 
+
+    stages {
+
+        stage('Pull') {
+            steps { 
+                git branch 'main',
+                url: 'https://github.com/ruchikaborkar01-glitch/new-repo--1.git'
+                    
+            }
+        }
+        stage('plan') {
+            steps {
+                sh '''
+                    terraform init 
+                    terraform plan 
+                '''    
+            }
+        } 
+
+        stage('Apply') {
+            steps {
+                sh '''
+                    terraform apply -auto-approve
+            }
+        } 
+    }      
+}
