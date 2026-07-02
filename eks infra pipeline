@@ -1,28 +1,36 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
 
-        stage('Pull') {
-            steps { 
-                git branch 'main' url: 'https://github.com/ruchikaborkar01-glitch/new-repo--1.git'
-                    
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ruchikaborkar01-glitch/new-repo--1.git'
             }
         }
-        stage('plan') {
+
+        stage('Init') {
             steps {
                 sh '''
-                    terraform init 
-                    terraform plan 
-                '''    
+                    terraform init
+                '''
             }
-        } 
+        }
+
+        stage('Plan') {
+            steps {
+                sh '''
+                    terraform plan
+                '''
+            }
+        }
 
         stage('Apply') {
             steps {
                 sh '''
                     terraform apply -auto-approve
+                '''
             }
-        } 
-    }      
+        }
+    }
 }
